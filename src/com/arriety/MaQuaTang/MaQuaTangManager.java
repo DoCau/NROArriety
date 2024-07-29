@@ -97,7 +97,7 @@ public class MaQuaTangManager {
             sb.append("Code: ").append(giftCode.code).append(", Số lượng: ").append(giftCode.countLeft).append("\b")
                     .append(", Ngày tạo: ")
                     .append(giftCode.datecreate).append("Ngày hết hạn").append(giftCode.dateexpired)
-                    .append("\n     Hết rồi!        ");
+                    .append("\n     Hết rồi!!        ");
         }
 
         NpcService.gI().createTutorial(p, 5073, sb.toString());
