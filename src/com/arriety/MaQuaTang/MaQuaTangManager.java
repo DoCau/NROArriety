@@ -41,6 +41,7 @@ public class MaQuaTangManager {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 MaQuaTang giftcode = new MaQuaTang();
+                giftcode.id = rs.getInt("id");
                 giftcode.code = rs.getString("code");
                 giftcode.countLeft = rs.getInt("count_left");
                 giftcode.datecreate = rs.getTimestamp("datecreate");
@@ -82,9 +83,20 @@ public class MaQuaTangManager {
 
     public MaQuaTang checkUseGiftCode(int idPlayer, String code) {
         for (MaQuaTang giftCode : listGiftCode) {
-            if (giftCode.code.equals(code) && giftCode.countLeft > 0 && !giftCode.isUsedGiftCode(idPlayer)) {
+            if (giftCode.code.equals(code) && giftCode.countLeft > 0
+                    && !giftCode.isUsedGiftCode(idPlayer, giftCode.id)) {
                 giftCode.countLeft -= 1;
-                giftCode.addPlayerUsed(idPlayer);
+                giftCode.addPlayerUsed(idPlayer, giftCode.id);
+                try (Connection con = GirlkunDB.getConnection();) {
+                    PreparedStatement ps = con.prepareStatement("update giftcode set count_left = ? where code like ?");
+                    ps.setInt(1, giftCode.countLeft);
+                    ps.setString(2, giftCode.code);
+                    ps.executeUpdate();
+                    ps.close();
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return giftCode;
             }
         }

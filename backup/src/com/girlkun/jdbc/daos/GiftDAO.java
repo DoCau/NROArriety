@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class GiftDAO {
 
     public static void createGiftPlayer(Connection con, int playerId) {
@@ -25,9 +24,9 @@ public class GiftDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-             ps = con.prepareStatement("select * from gift where player_id = ?");
+            ps = con.prepareStatement("select * from gift where player_id = ?");
             ps.setInt(1, (int) player.id);
-             rs = ps.executeQuery();
+            rs = ps.executeQuery();
             if (rs.first()) {
                 player.gift.goldTanThu = rs.getBoolean("gold_tan_thu");
                 player.gift.gemTanThu = rs.getBoolean("gem_tan_thu");
@@ -38,8 +37,8 @@ public class GiftDAO {
             ps.close();
         } catch (Exception e) {
             Logger.logException(GiftDAO.class, e);
-        } finally{
-            
+        } finally {
+
             try {
                 if (rs != null) {
                     rs.close();
@@ -54,7 +53,8 @@ public class GiftDAO {
 
     public static void saveGiftPlayer(Connection con, Player player) {
         try {
-            PreparedStatement ps = con.prepareStatement("update gift set gold_tan_thu = ?, gem_tan_thu = ? where player_id = ?");
+            PreparedStatement ps = con
+                    .prepareStatement("update gift set gold_tan_thu = ?, gem_tan_thu = ? where player_id = ?");
             ps.setBoolean(1, player.gift.goldTanThu);
             ps.setBoolean(2, player.gift.gemTanThu);
             ps.setInt(3, (int) player.id);
