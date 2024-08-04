@@ -32,7 +32,8 @@ public class NpcManager {
         List<Npc> list = new ArrayList<>();
         if (player.zone != null) {
             for (Npc npc : player.zone.map.npcs) {
-                if (npc.tempId == ConstNpc.QUA_TRUNG && player.mabuEgg == null && player.zone.map.mapId == (21 + player.gender)) {
+                if (npc.tempId == ConstNpc.QUA_TRUNG && player.mabuEgg == null
+                        && player.zone.map.mapId == (21 + player.gender)) {
                     continue;
                 } else if (npc.tempId == ConstNpc.QUA_TRUNG && player.billEgg == null && player.zone.map.mapId == 154) {
                     continue;
